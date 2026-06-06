@@ -8,7 +8,7 @@ Suhani Bode
 
 # Affiliation
 
-RTMNU
+Rashtrasant Tukadoji Maharaj Nagpur University, Nagpur
 
 # Date
 
