@@ -42,7 +42,7 @@ for w in REQUIRED_WARNINGS:
     logger.warning(w)
 
 # ─── Database ─────────────────────────────────────────────────────────────────
-DB_PATH = os.environ.get("DB_PATH", "venturescope.db")
+DB_PATH = os.environ.get("DB_PATH", "/tmp/venturescope.db")
 
 def get_db():
     db = getattr(g, "_database", None)
