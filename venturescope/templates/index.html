@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VentureScope — AI Investment Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login-screen" class="screen visible">
+  <div class="login-bg">
+    <div class="noise-overlay"></div>
+    <canvas id="particles-canvas"></canvas>
+    <div class="login-glow g1"></div>
+    <div class="login-glow g2"></div>
+    <div class="login-glow g3"></div>
+  </div>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M11 2V20M2 7L20 15M20 7L2 15" stroke="white" stroke-width="1" opacity="0.5"/>
+          </svg>
+        </div>
+        <span class="brand-name">VentureScope</span>
+      </div>
+      <div class="login-headline">
+        <h1>Investment<br/><em>Intelligence</em></h1>
+        <p>AI-powered startup analysis for modern venture capital</p>
+      </div>
+      <div id="login-error" class="error-msg" style="display:none">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v3.5M7 9.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span id="login-error-text">Invalid credentials.</span>
+      </div>
+      <div class="login-form">
+        <div class="form-field">
+          <label>Username</label>
+          <div class="field-wrap">
+            <svg class="field-ico" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2 12c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <input type="text" id="username" placeholder="Enter username" autocomplete="username"/>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Password</label>
+          <div class="field-wrap">
+            <svg class="field-ico" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2.5" y="6" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M4.5 6V4.5a2.5 2.5 0 015 0V6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            <input type="password" id="password" placeholder="Enter password" autocomplete="current-password"/>
+          </div>
+        </div>
+        <button class="login-btn" id="login-btn" onclick="doLogin()">
+          <span>Access Platform</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="login-footer">
+        <span class="status-dot"></span>
+        Secured · bcrypt passwords · session auth
+      </div>
+    </div>
+    <div class="login-side">
+      <div class="side-stats">
+        <div class="side-stat"><div class="ss-value">94<span>%</span></div><div class="ss-label">Prediction Accuracy</div></div>
+        <div class="side-divider"></div>
+        <div class="side-stat"><div class="ss-value">2.4<span>s</span></div><div class="ss-label">Avg. Analysis Time</div></div>
+        <div class="side-divider"></div>
+        <div class="side-stat"><div class="ss-value">12<span>K+</span></div><div class="ss-label">Startups Analyzed</div></div>
+      </div>
+      <div class="side-quote">
+        <svg width="32" height="24" viewBox="0 0 32 24" fill="none"><path d="M0 24V14.4C0 9.6 1.6 5.6 4.8 2.4L8 0l2.4 2.4C7.2 5.6 5.6 8.8 5.6 12H12V24H0ZM20 24V14.4c0-4.8 1.6-8.8 4.8-12L28 0l2.4 2.4C27.2 5.6 25.6 8.8 25.6 12H32V24H20Z" fill="currentColor" opacity="0.15"/></svg>
+        <p>The best VCs don't just invest in companies — they invest in data-driven conviction.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ INPUT SCREEN ═══ -->
+<div id="input-screen" class="screen">
+  <header class="app-header">
+    <div class="header-left">
+      <div class="brand-icon sm">
+        <svg width="16" height="16" viewBox="0 0 22 22" fill="none">
+          <path d="M11 2L20 7V15L11 20L2 15V7L11 2Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M11 2V20M2 7L20 15M20 7L2 15" stroke="white" stroke-width="1" opacity="0.5"/>
+        </svg>
+      </div>
+      <span class="header-brand">VentureScope</span>
+      <div class="header-badge">AI v2</div>
+    </div>
+    <div class="header-right">
+      <div class="header-status"><span class="pulse-dot"></span><span>Model Ready</span></div>
+      <button class="icon-btn" onclick="openHistory()" title="History">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 4v3.5l2.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        History
+      </button>
+      <span class="header-user" id="header-user"></span>
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="input-main">
+    <div class="input-hero">
+      <div class="hero-tag"><span class="tag-dot"></span>Powered by AI Analysis</div>
+      <h2>Analyze Any<br/><span class="gradient-text">Startup in Seconds</span></h2>
+      <p>Enter your startup's key metrics and get an institutional-grade investment analysis with risk scoring, runway projections, and AI commentary.</p>
+    </div>
+
+    <div class="input-grid">
+      <div class="field-card">
+        <div class="fc-header">
+          <div class="fc-icon" style="--ico-bg:#a78bfa20">💰</div>
+          <div><div class="fc-label">Total Funding</div><div class="fc-hint">Capital raised to date</div></div>
+        </div>
+        <div class="fc-input-wrap">
+          <span class="fc-prefix">$</span>
+          <input class="fc-input" type="number" id="funding" placeholder="500000" min="0"/>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <div class="fc-header">
+          <div class="fc-icon" style="--ico-bg:#34d39920">👥</div>
+          <div><div class="fc-label">Team Size</div><div class="fc-hint">Full-time employees</div></div>
+        </div>
+        <div class="fc-input-wrap">
+          <input class="fc-input" type="number" id="team" placeholder="12" min="1"/>
+          <span class="fc-suffix">people</span>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <div class="fc-header">
+          <div class="fc-icon" style="--ico-bg:#60a5fa20">📈</div>
+          <div><div class="fc-label">Monthly Revenue</div><div class="fc-hint">Current MRR</div></div>
+        </div>
+        <div class="fc-input-wrap">
+          <span class="fc-prefix">$</span>
+          <input class="fc-input" type="number" id="revenue" placeholder="45000" min="0"/>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <div class="fc-header">
+          <div class="fc-icon" style="--ico-bg:#f8717120">🔥</div>
+          <div><div class="fc-label">Monthly Burn Rate</div><div class="fc-hint">Total monthly spend</div></div>
+        </div>
+        <div class="fc-input-wrap">
+          <span class="fc-prefix">$</span>
+          <input class="fc-input" type="number" id="burn" placeholder="30000" min="0"/>
+        </div>
+      </div>
+
+      <div class="field-card field-full">
+        <div class="fc-header">
+          <div class="fc-icon" style="--ico-bg:#fbbf2420">🚀</div>
+          <div><div class="fc-label">Monthly Growth Rate</div><div class="fc-hint">Month-over-month revenue growth</div></div>
+        </div>
+        <div class="fc-input-wrap">
+          <input class="fc-input" type="number" id="growth" placeholder="15" min="-100" max="1000"/>
+          <span class="fc-suffix">% / month</span>
+        </div>
+        <div class="growth-slider-wrap">
+          <input type="range" id="growth-slider" class="growth-slider" min="-20" max="100" value="15" oninput="syncGrowth(this.value)"/>
+          <div class="slider-labels"><span>Declining</span><span>Explosive</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analyze-section">
+      <button class="analyze-btn" id="analyzeBtn" onclick="predict()">
+        <div class="btn-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 8h4M8 6v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <span class="btn-text">Run Analysis</span>
+        <div class="btn-arrow">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </button>
+      <div class="analyze-meta">
+        <span>⚡ ~2 second analysis</span><span>·</span>
+        <span>🔒 Data saved to your history</span><span>·</span>
+        <span>🤖 AI-powered insights</span>
+      </div>
+    </div>
+    <div id="loadingBar" class="loading-track" style="display:none"><div class="loading-fill"></div></div>
+    <div id="loadingText" class="loading-label" style="display:none">
+      <span class="loading-spinner"></span>Running AI analysis...
+    </div>
+    <div id="input-error" class="error-msg" style="display:none;margin-top:12px">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v3.5M7 9.5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span id="input-error-text"></span>
+    </div>
+  </main>
+</div>
+
+<!-- ═══ OUTPUT SCREEN ═══ -->
+<div id="output-screen" class="screen">
+  <header class="app-header">
+    <div class="header-left">
+      <button class="back-btn" onclick="goBack()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back
+      </button>
+      <div class="header-divider"></div>
+      <span class="header-brand">Analysis Report</span>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" onclick="openHistory()">
+        <svg width="14" height="14" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7.5 4v3.5l2.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        History
+      </button>
+      <button class="export-btn" onclick="exportReport()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Export
+      </button>
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="output-main">
+    <div id="verdict-banner" class="verdict-banner"></div>
+    <div id="metrics-row" class="kpi-row"></div>
+    <div class="output-grid">
+      <div class="output-col-main">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">AI Analysis</div>
+            <div class="ai-badge"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 2v3l2 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>GPT-Powered</div>
+          </div>
+          <p id="summary-text" class="summary-body"></p>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Score Breakdown</div>
+            <div id="score-total-badge" class="score-badge"></div>
+          </div>
+          <div id="score-bars"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Score Trajectory</div>
+            <div class="panel-tag">6-Month Projection</div>
+          </div>
+          <div class="chart-area"><canvas id="trajectoryChart"></canvas></div>
+        </div>
+      </div>
+      <div class="output-col-side">
+        <div id="invest-action-panel" class="panel invest-panel"></div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Risk Profile</div></div>
+          <div class="donut-wrap"><canvas id="donutChart"></canvas><div id="donut-center" class="donut-center"></div></div>
+          <div id="donut-legend" class="donut-legend"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Risk Components</div></div>
+          <div class="chart-area sm"><canvas id="riskChart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Capital Runway</div></div>
+          <div id="runway-display"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">6-Month Outlook</div></div>
+          <div id="future-row" class="future-grid"></div>
+        </div>
+      </div>
+    </div>
+    <div class="output-footer">Analysis generated by VentureScope AI · Saved to your history · For informational purposes only</div>
+  </main>
+</div>
+
+<!-- ═══ HISTORY DRAWER ═══ -->
+<div id="history-overlay" class="drawer-overlay" onclick="closeHistory()"></div>
+<div id="history-drawer" class="history-drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 4.5V8l3 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Analysis History
+    </div>
+    <button class="drawer-close" onclick="closeHistory()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="drawer-search">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="5.5" cy="5.5" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M9 9l2.5 2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <input type="text" id="history-search" placeholder="Filter by stage or decision..." oninput="filterHistory(this.value)"/>
+  </div>
+  <div id="history-list" class="history-list">
+    <div class="history-loading">
+      <span class="loading-spinner"></span>Loading history...
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <span id="history-count" class="history-count"></span>
+    <button class="clear-history-btn" onclick="confirmClearAll()">Clear All</button>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/static/script.js"></script>
+</body>
+</html>
