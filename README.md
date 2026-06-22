@@ -1,6 +1,6 @@
 ## Live Demo
 
-🔗 **Deployment Link:** [Click Here to View Project](https://Startup-success-predictor-xi.vercel.app)
+🔗 **Deployment Link:** [Click Here to View Project](http://Startup-success-predictor-xi.vercel.app)
 
 You can access and test the complete working project using the live deployment link above.
 
