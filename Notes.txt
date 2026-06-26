@@ -116,6 +116,6 @@ AI:      OpenRouter (Mistral-7B-Instruct)
 10. PROJECT LINK
 ----------------------------------------------------
 GitHub:      (https://github.com/suhanibode248/Startup-success-predictor.git)
-Live/Deploy: ()
+Live/Deploy: (https://startup-success-predictor-xi.vercel.app/)
 
 ====================================================
