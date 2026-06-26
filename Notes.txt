@@ -1,0 +1,122 @@
+====================================================
+  VENTURESCOPE — PROJECT NOTES
+====================================================
+
+----------------------------------------------------
+1. PROJECT DESCRIPTION
+----------------------------------------------------
+VentureScope is an AI-powered startup investment analysis tool. Users input key
+startup metrics (funding, team size, revenue, burn rate, growth rate) and the app
+produces a composite investment score, risk assessment, runway estimate, stage
+classification, and an AI-generated analyst summary. Results are saved to a
+per-user history.
+
+----------------------------------------------------
+2. REQUIREMENTS
+----------------------------------------------------
+Python packages (requirements.txt):
+  - flask >= 3.0.0      — Web framework
+  - requests >= 2.31.0  — HTTP calls to OpenRouter AI API
+  - gunicorn >= 21.0.0  — Production WSGI server
+
+Optional environment variables:
+  - SECRET_KEY          — Flask session secret (random default resets on restart)
+  - APP_USERNAME        — Admin username (default: admin)
+  - APP_PASSWORD        — Admin password (default: venture2024)
+  - EXTRA_USERS         — Extra users as "user1:pass1,user2:pass2"
+  - OPENROUTER_API_KEY  — Enables real AI summaries (falls back to rule-based)
+  - DB_PATH             — SQLite DB path (default: venturescope.db)
+  - FLASK_DEBUG         — Enable debug mode (default: false)
+  - PORT                — Server port (default: 5000)
+
+----------------------------------------------------
+3. HOW TO RUN PROJECT
+----------------------------------------------------
+Development:
+  pip install -r requirements.txt
+  python app.py
+  # Open http://localhost:5000
+  # Login: admin / venture2024
+
+Production (gunicorn):
+  SECRET_KEY=$(python -c "import secrets; print(secrets.token_hex(32))") \
+  APP_PASSWORD=yourpassword \
+  gunicorn app:app -w 4 -b 0.0.0.0:8000
+
+----------------------------------------------------
+4. HOW IT WORKS (TECH FLOW)
+----------------------------------------------------
+1. User logs in via POST /login → Flask sets a server-side session cookie.
+2. User submits startup metrics via the form in index.html.
+3. Frontend sends POST /predict (JSON) with the 5 input fields.
+4. Backend (app.py) validates inputs, then runs the scoring engine:
+     - Revenue Strength (30%), Growth Potential (25%),
+       Burn Efficiency (25%), Team Capability (20%)
+5. Risk, runway, stage, decision label, and future score are computed.
+6. If OPENROUTER_API_KEY is set, a 3-sentence AI summary is fetched from
+   Mistral-7B via OpenRouter; otherwise a rule-based fallback is used.
+7. Full result is persisted to SQLite (analyses table) and returned as JSON.
+8. Frontend renders score cards, a radar chart, and the analyst summary.
+9. User can browse past analyses via GET /history (slide-in history panel).
+
+----------------------------------------------------
+5. FEATURES
+----------------------------------------------------
+- Login/logout with PBKDF2-hashed passwords and server-side sessions
+- Startup scoring across 4 weighted factors (0–100 composite score)
+- Risk assessment, runway calculation, failure risk estimate
+- Stage classification: Idea → Early → Growth → Scaling
+- Investment decision: Strong Investment / Good Startup / Watchlist / High Risk
+- Investment action: INVEST / WAIT / REJECT / EMERGENCY FUNDING
+- AI analyst summary (OpenRouter Mistral-7B or built-in rule-based fallback)
+- Per-user analysis history (last 50 saved; searchable, deletable)
+- Rate limiting: 10 logins/min per IP, 30 analyses/min per user
+- Multi-user support via env vars
+- Dark luxury editorial UI with charts
+
+----------------------------------------------------
+6. COMMON ISSUES & FIXES
+----------------------------------------------------
+- "Sessions reset on restart" → Set a persistent SECRET_KEY env variable.
+- "AI summaries not working" → Set OPENROUTER_API_KEY; falls back automatically.
+- "401 Unauthorized" → Session expired; log in again.
+- "429 Too Many Requests" → Hit rate limit; wait 60 seconds.
+- DB errors on startup → Check DB_PATH is writable; delete venturescope.db to reset.
+- Port already in use → Change PORT env variable or kill the existing process.
+
+----------------------------------------------------
+7. SUPPORTED BROWSERS
+----------------------------------------------------
+All modern browsers:
+  - Chrome 90+
+  - Firefox 88+
+  - Safari 14+
+  - Edge 90+
+
+No IE support. Requires JavaScript enabled.
+
+----------------------------------------------------
+8. TIPS FOR BEST RESULTS
+----------------------------------------------------
+- Set OPENROUTER_API_KEY for real AI analyst summaries instead of rule-based text.
+- Use a strong, persistent SECRET_KEY in production so sessions survive restarts.
+- Change the default password (venture2024) before deploying publicly.
+- Run with gunicorn (4+ workers) in production for concurrent user support.
+- Enable HTTPS in production and uncomment SESSION_COOKIE_SECURE in app.py.
+- Use DB_PATH to point to a persistent volume when deploying on cloud platforms.
+
+----------------------------------------------------
+9. AUTHOR
+----------------------------------------------------
+Project: VentureScope v2
+Stack:   Python / Flask / SQLite / Vanilla JS
+AI:      OpenRouter (Mistral-7B-Instruct)
+
+----------------------------------------------------
+10. PROJECT LINK
+----------------------------------------------------
+Local:       http://localhost:5000
+GitHub:      (add your repo URL here)
+Live/Deploy: (add your deployment URL here)
+
+====================================================
