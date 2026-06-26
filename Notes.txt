@@ -115,8 +115,7 @@ AI:      OpenRouter (Mistral-7B-Instruct)
 ----------------------------------------------------
 10. PROJECT LINK
 ----------------------------------------------------
-Local:       http://localhost:5000
-GitHub:      (add your repo URL here)
-Live/Deploy: (add your deployment URL here)
+GitHub:      (https://github.com/suhanibode248/Startup-success-predictor.git)
+Live/Deploy: ()
 
 ====================================================
