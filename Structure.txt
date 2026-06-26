@@ -1,0 +1,10 @@
+venturescope/
+├── app.py                  # Flask backend: auth, scoring engine, API routes, history
+├── requirements.txt        # Python dependencies (flask, requests, gunicorn)
+├── README.md               # Project documentation and setup guide
+├── venturescope.db         # SQLite database (auto-created on first run)
+├── templates/
+│   └── index.html          # Single-page app (login, input form, results, history)
+└── static/
+    ├── style.css           # Dark luxury design system (CSS)
+    └── script.js           # Vanilla JS: auth, charts, history, export, toast UI
